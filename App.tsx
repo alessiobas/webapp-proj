@@ -1,20 +1,83 @@
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { Base } from "../proj/styles";
+import FlashMessage from "react-native-flash-message";
+
+import Home from "./components/Home";
+import trainsModel from "./models/trains";
+import authModel from "./models/auth";
+import Auth from "./components/auth/Auth";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [delays, setDelays] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+
+  useEffect(async () => {
+    setIsLoggedIn(await authModel.loggedIn())
+  }, []);
+
+  useEffect(async () => {
+    setDelays(await trainsModel.getDelaysFromStations())
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer>
+      <Tab.Navigator screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName = routeIcons[route.name] || "alert";
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'blue',
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false
+      })}
+    >
+        <Tab.Screen name="Delays">
+            {() => <Home delays={delays} setDelays={setDelays} />}
+        </Tab.Screen>
+        {/* <Tab.Screen name="Plock">
+          {() => <Pick setProducts={setProducts} allOrders={allOrders} setAllOrders={setAllOrders} />}
+        </Tab.Screen>
+        <Tab.Screen name="Inleverans">
+          {() => <Deliveries setProducts={setProducts} />}
+        </Tab.Screen> */}
+        {isLoggedIn ?
+          <Tab.Screen name="Faktura">
+            {() => <Invoices setIsLoggedIn={setIsLoggedIn} />}
+          </Tab.Screen> :
+          <Tab.Screen name="Logga in">
+            {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+          </Tab.Screen>
+        }
+        {/* <Tab.Screen name="Skicka order">
+          {() => <Ship/>}
+        </Tab.Screen> */}
+        </Tab.Navigator>
+      </NavigationContainer>
+      <FlashMessage position="top" />
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  container: Base.container,
 });
+
+const routeIcons = {
+  "Home": "train-outline",
+  // "Plock": "list",
+  // "Inleverans": "send",
+  "Logga in": "lock-closed",
+  // "Faktura": "cash-outline",
+  // "Skicka order": "map",
+};
