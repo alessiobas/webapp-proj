@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, SafeAreaView } from "react-native";
 import { Typography, Forms, Base } from '../../styles';
 import { showMessage } from 'react-native-flash-message';
 
@@ -29,7 +29,7 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
     }
 
     return (
-        <View style={Base.container}>
+        <SafeAreaView style={Base.container}>
             <Text style={Typography.header2}>{title}</Text>
             <Text style={Typography.label}>E-post</Text>
             <TextInput
@@ -69,6 +69,6 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
                     }}
                 />
             }
-        </View>
+        </SafeAreaView>
     );
 };

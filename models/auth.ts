@@ -1,5 +1,6 @@
 import config from "../config/config.json";
 import storage from "./storage";
+import Auth from "../interfaces/auth";
 
 
 const auth = {
@@ -17,7 +18,7 @@ const auth = {
             password: password
         };
 
-        const respons = await fetch(`${config.base_url}/auth/register`,
+        const respons = await fetch(`https://auth.emilfolino.se/auth/register`,
         {
             method: "POST",
             body: JSON.stringify(data),
@@ -50,7 +51,7 @@ const auth = {
             password: password
         };
 
-        const respons = await fetch(`${config.base_url}/auth/login`,
+        const respons = await fetch(`https://auth.emilfolino.se/auth/login`,
         {
             method: "POST",
             body: JSON.stringify(data),

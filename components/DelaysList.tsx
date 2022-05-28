@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Text, ScrollView } from 'react-native';
-import config from "../config/config.json";
+import { View, Text, ScrollView } from 'react-native';
 import { Base, Typography } from '../styles';
 
 import trainsModel from "../models/trains";
 
-export default function DelaysList({ delays, setDelays }) {
+export default function DelaysList({ delays, setDelays, setStations }) {
 
     useEffect(async () => {
         setDelays(await trainsModel.getDelays());
+    }, []);
+
+    useEffect(async () => {
+        setStations(await trainsModel.getStations());
     }, []);
 
     const list = delays.map((delay, index) => {
@@ -20,8 +23,8 @@ export default function DelaysList({ delays, setDelays }) {
     });
 
     return (
-        <ScrollView>
+        <View>
             {list}
-        </ScrollView>
+        </View>
     );
 };

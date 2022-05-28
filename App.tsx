@@ -9,22 +9,27 @@ import { Base } from "../proj/styles";
 import FlashMessage from "react-native-flash-message";
 
 import Home from "./components/Home";
+import Auth from "./components/auth/Auth";
 import trainsModel from "./models/trains";
 import authModel from "./models/auth";
-import Auth from "./components/auth/Auth";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [delays, setDelays] = useState([]);
+  const [stations, setStations] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
 
-  useEffect(async () => {
-    setIsLoggedIn(await authModel.loggedIn())
+  useEffect(() => {
+    (async () => {
+      setStations(await trainsModel.getStations());
+    })();
   }, []);
 
-  useEffect(async () => {
-    setDelays(await trainsModel.getDelaysFromStations())
+  useEffect(() => {
+    (async () => {
+      setIsLoggedIn(await authModel.loggedIn());
+    })();
   }, []);
 
   return (
@@ -36,13 +41,16 @@ export default function App() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'blue',
-        tabBarInactiveTintColor: 'gray',
-        headerShown: false
+        tabBarActiveTintColor: 'green',
+        tabBarInactiveTintColor: 'white',
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: 'rgba(34,36,40,1)',
+      },
       })}
     >
         <Tab.Screen name="Delays">
-            {() => <Home delays={delays} setDelays={setDelays} />}
+            {() => <Home delays={delays} setDelays={setDelays} setStations={setStations} />}
         </Tab.Screen>
         {/* <Tab.Screen name="Plock">
           {() => <Pick setProducts={setProducts} allOrders={allOrders} setAllOrders={setAllOrders} />}
@@ -74,7 +82,7 @@ const styles = StyleSheet.create({
 });
 
 const routeIcons = {
-  "Home": "train-outline",
+  "Delays": "train-outline",
   // "Plock": "list",
   // "Inleverans": "send",
   "Logga in": "lock-closed",
