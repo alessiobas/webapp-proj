@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { Base, Typography } from '../styles';
+import { Base, Typography } from '../../styles';
 
-import trainsModel from "../models/trains";
+import delayModel from "../../models/delays";
+import stationModel from "../../models/stations";
 
 export default function DelaysList({ delays, setDelays, setStations }) {
 
     useEffect(async () => {
-        setDelays(await trainsModel.getDelays());
+        setDelays(await delayModel.getDelays());
     }, []);
 
     useEffect(async () => {
-        setStations(await trainsModel.getStations());
+        setStations(await stationModel.getStations());
     }, []);
 
     const list = delays.map((delay, index) => {

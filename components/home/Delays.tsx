@@ -1,7 +1,7 @@
 import { Text, ScrollView } from 'react-native';
-import { Typography } from '../styles';
+import { Typography } from '../../styles';
 
-import DelaysList from './DelaysList';
+import DelaysList from './Delay';
 
 export default function Delays({ delays, setDelays, setStations }) {
     return (

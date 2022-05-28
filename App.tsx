@@ -8,15 +8,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { Base } from "../proj/styles";
 import FlashMessage from "react-native-flash-message";
 
-import Home from "./components/Home";
+import Home from "./components/home/Home";
 import Auth from "./components/auth/Auth";
-import trainsModel from "./models/trains";
+import Map from "./components/map/Map";
+import trainsModel from "./models/delays";
 import authModel from "./models/auth";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [delays, setDelays] = useState([]);
+  const [starStations, setStarStations] = useState([]);
   const [stations, setStations] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
 
@@ -49,26 +50,20 @@ export default function App() {
       },
       })}
     >
-        <Tab.Screen name="Delays">
-            {() => <Home delays={delays} setDelays={setDelays} setStations={setStations} />}
-        </Tab.Screen>
-        {/* <Tab.Screen name="Plock">
-          {() => <Pick setProducts={setProducts} allOrders={allOrders} setAllOrders={setAllOrders} />}
-        </Tab.Screen>
-        <Tab.Screen name="Inleverans">
-          {() => <Deliveries setProducts={setProducts} />}
+        {/* <Tab.Screen name="Home">
+            {() => <Home stations={stations} starStations={starStations} setStarStations={setStarStations} isLoggedIn={isLoggedIn} />}
         </Tab.Screen> */}
-        {isLoggedIn ?
+        <Tab.Screen name="Delays">
+          {() => <Map stations={stations} isLoggedIn={isLoggedIn} />}
+        </Tab.Screen>
+        {/* {isLoggedIn ?
           <Tab.Screen name="Faktura">
             {() => <Invoices setIsLoggedIn={setIsLoggedIn} />}
           </Tab.Screen> :
           <Tab.Screen name="Logga in">
             {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
           </Tab.Screen>
-        }
-        {/* <Tab.Screen name="Skicka order">
-          {() => <Ship/>}
-        </Tab.Screen> */}
+        } */}
         </Tab.Navigator>
       </NavigationContainer>
       <FlashMessage position="top" />
@@ -83,6 +78,7 @@ const styles = StyleSheet.create({
 
 const routeIcons = {
   "Delays": "train-outline",
+  "Home": "search-outline",
   // "Plock": "list",
   // "Inleverans": "send",
   "Logga in": "lock-closed",
