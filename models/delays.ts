@@ -68,41 +68,26 @@ const delays = {
 
         const result = {
             "delay": delayedInfo
-            // "time": this.getTime(delayedInfo[0].AdvertisedTimeAtLocation, delayedInfo[0].EstimatedTimeAtLocation)
         }
         return result;
     },
 
-    getDelayFromStation: function getDelayFromStation(delay: Object, stations:Array<any>) {
-        let fLocation = "null";
-        let tLocation = "null";
-        let location:Boolean = false;
+    getDelayFromStation: async function getDelayFromStation() {
+        let allStations = await stationsModel.getStations();
+        let allDelays = await this.getDelays();
+        const res = [];
 
-        if (delay.FromLocation !== undefined) {
-            fLocation = this.getDelay(delay.FromLocation[0].LocationName, stations);
-            location = true;
-        } else {
-            fLocation = "info saknas";
+        for (let i=0; i < allDelays.length; i++) {
+            if (allDelays[i].FromLocation !== undefined) {
+                res.push(allDelays[i]);
+            }
         }
 
-        if (delay.ToLocation !== undefined) {
-            tLocation = this.getDelay(delay.ToLocation[0].LocationName, stations);
-        } else {
-            tLocation = "info saknas";
-        }
-        
-        const result = {
-            "delay": delay,
-            "locations":
-            [
-                {
-                "fLocation": fLocation,
-                "tLocation": tLocation,
-                },
-            ],
-            "locationBool": location,
-            "time": this.getTime(delay.AdvertisedTimeAtLocation, delay.EstimatedTimeAtLocation)
-        }
+
+        const result = res.map(item => ({
+            ...allStations.find(({ LocationSignature }) => item.FromLocation[0].LocationName == LocationSignature),
+            ...item,
+        }));
 
         return result;
     },

@@ -11,22 +11,14 @@ import FlashMessage from "react-native-flash-message";
 import Home from "./components/home/Home";
 import Auth from "./components/auth/Auth";
 import Map from "./components/map/Map";
-import Favorites from './components/favorites/fav';
-import trainsModel from "./models/delays";
+import Favorites from './components/favorites/Fav';
+// import trainsModel from "./models/delays";
 import authModel from "./models/auth";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [starStations, setStarStations] = useState([]);
-  const [stations, setStations] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
-
-  useEffect(() => {
-    (async () => {
-      setStations(await trainsModel.getStations());
-    })();
-  }, []);
 
   useEffect(() => {
     (async () => {

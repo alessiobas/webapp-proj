@@ -1,6 +1,6 @@
 export default interface Stations {
     LocationSignature: string,
     AdvertisedLocationName: string,
-    Geometry: string,
-    PlatformLine: string,
+    Geometry: object,
+    PlatformLine: Array<string>,
 };

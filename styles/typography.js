@@ -24,6 +24,7 @@ export const normal = {
 export const label = {
     fontSize: 20,
     margin: 2,
+    color: 'white',
 };
 
 export const delayText = {

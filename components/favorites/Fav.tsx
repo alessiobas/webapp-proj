@@ -1,17 +1,21 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import FavList from './FavList';
-import FavForm from './FavForm';
+import FavDetails from './FavDetails';
+import AddFav from './AddFav';
 
 const Stack = createNativeStackNavigator();
 
 export default function Favorites(props) {
     return (
-        <Stack.Navigator initialRouteName="List" screenOptions={{headerShown: false}}>
-            <Stack.Screen name="List">
+        <Stack.Navigator initialRouteName="FavList" screenOptions={{headerShown: false}}>
+            <Stack.Screen name="FavList">
                 { (screenProps) => <FavList {...screenProps} setIsLoggedIn={props.setIsLoggedIn} />}
             </Stack.Screen>
-            <Stack.Screen name="Form" component={FavForm} />
+            {/* <Stack.Screen name="Add" component={AddFav} /> */}
+            {/* <Stack.Screen name="Details">
+                { (screenProps) => <FavDetails {...screenProps} />}
+            </Stack.Screen> */}
         </Stack.Navigator>
     );
 };

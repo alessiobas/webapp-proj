@@ -4,21 +4,28 @@ import Auth from "../interfaces/auth";
 
 
 const auth = {
-    loggedIn: async function loggedIn() {
-        const tokenAndDate: any = await storage.readToken();
-        const twentyFourHours = 1000*60*60*24;
-        const notExpired = (new Date().getTime() - tokenAndDate.date) < twentyFourHours;
+    // loggedIn: async function loggedIn() {
+    //     const tokenAndDate: any = await storage.readToken();
+    //     const twentyFourHours = 1000*60*60*24;
+    //     const notExpired = (new Date().getTime() - tokenAndDate.date) < twentyFourHours;
 
-        return tokenAndDate.token && notExpired;
+    //     return tokenAndDate.token && notExpired;
+    // },
+    loggedIn: async function loggedIn() {
+        const token = await storage.readToken();
+        const twentyFourHours = 1000*60*60*24;
+        const notExpired = (new Date().getTime() - token.date) < twentyFourHours;
+
+        return token && notExpired;
     },
     register: async function register(email: string, password: string) {
         const data = {
             api_key: config.api_key,
             email: email,
-            password: password
+            password: password,
         };
 
-        const respons = await fetch(`https://auth.emilfolino.se/auth/register`,
+        const respons = await fetch(`${config.base_url}/register`,
         {
             method: "POST",
             body: JSON.stringify(data),
@@ -48,10 +55,10 @@ const auth = {
         const data = {
             api_key: config.api_key,
             email: email,
-            password: password
+            password: password,
         };
 
-        const respons = await fetch(`https://auth.emilfolino.se/auth/login`,
+        const respons = await fetch(`${config.base_url}/login`,
         {
             method: "POST",
             body: JSON.stringify(data),
