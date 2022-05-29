@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { Base, Typography } from "../../styles";
 import { DataTable } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
 
 import MapView from 'react-native-maps';
 import { Marker, Circle } from "react-native-maps";
@@ -12,11 +13,10 @@ import { showMessage } from "react-native-flash-message";
 import delayModel from "../../models/delays";
 import stationsModel from "../../models/stations";
 import Delays from "../home/Delays";
+import delays from "../../models/delays";
 
 
-export default function MapList({ navigation }) {
-    // const {order} = route.params;
-    // const [marker, setMarker] = useState(null);
+export default function MapList() {
     const [locationMarker, setLocationMarker] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [delayed, setDelays] = useState([]);
@@ -77,18 +77,16 @@ export default function MapList({ navigation }) {
             let delayEsTime = delayModel.getTime(theDelay.delay[theDelay.delay.length-1].AdvertisedTimeAtLocation, theDelay.delay[theDelay.delay.length-1].EstimatedTimeAtLocation).estime;
             let minutes = delayModel.getTime(theDelay.delay[theDelay.delay.length-1].AdvertisedTimeAtLocation, theDelay.delay[theDelay.delay.length-1].EstimatedTimeAtLocation).mins;
             return (
-                <TouchableOpacity
+                <View
                     style={Base.delayCard}
                     key={index}
-                    onPress={() => {
-                            navigation.navigate("One", {theDelay: theDelay})
-                    }}>
+                    >
                 <Text style={Typography.delayText}>Station: {stationname}</Text>
                 <Text style={Typography.delayText}>Tåg: {trainnr}</Text>
                 <Text style={Typography.delayText}>Avgångstid: {delayAdTime}</Text>
                 <Text style={Typography.delayText}>Ny avgångstid: {delayEsTime}</Text>
-                <Text style={Typography.delayText}>Försning: {minutes} minuter</Text>
-                </TouchableOpacity>
+                <Text style={Typography.delayText}>Försening: {minutes} minuter</Text>
+                </View>
             );
         } else {
             <Text>Information om avgång saknas</Text>
@@ -100,13 +98,25 @@ export default function MapList({ navigation }) {
             const delayser = delayModel.getDelaysList(station.LocationSignature, delayed);
             if (delayser.delay[delayser.delay.length-1] !== undefined) {
                 let desc = `Tåg nr: ${delayser.delay[delayser.delay.length-1].AdvertisedTrainIdent} Ny avgångstid: ${delayModel.getTime(delayser.delay[delayser.delay.length-1].AdvertisedTimeAtLocation, delayser.delay[delayser.delay.length-1].EstimatedTimeAtLocation).estime}`;
-                return (
+                let time = delayModel.getTime(delayser.delay[delayser.delay.length-1].AdvertisedTimeAtLocation, delayser.delay[delayser.delay.length-1].EstimatedTimeAtLocation).mins;
+                return (<>
                     <Marker
                         key={index}
                         title={station.AdvertisedLocationName}
                         description={desc}
-                        coordinate={{ longitude: parseFloat(useLocation[0]), latitude: parseFloat(useLocation[1]) }}
-                    />
+                        coordinate={{ longitude: parseFloat(useLocation[0]), latitude: parseFloat(useLocation[1]) }} 
+                        />
+                        <Circle
+                            center={{
+                                longitude: parseFloat(useLocation[0]),
+                                latitude: parseFloat(useLocation[1]),
+                            }}
+                            radius={(((time) * 100) / 2) * 0.7}
+                            fillColor="rgba(77, 184, 54, 0.10)"
+                            strokeWidth={1}
+                            strokeColor="green" 
+                            />
+                            </>
                 );
             } else {
                 return (
@@ -123,18 +133,24 @@ export default function MapList({ navigation }) {
     return (
         <SafeAreaView style={Base.container}>
             <Text style={Typography.header2}>Förseningar</Text>
-            <View style={Base.head}>
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                        latitude: 59.3346,
-                        longitude: 18.0869,
-                        latitudeDelta: 7,
-                        longitudeDelta: 7,
-                    }} >
-                    {locationMarker}
-                    {toFromMarkers}
-                </MapView>
+                <View style={Base.head}>
+                    <MapView
+                        style={styles.map}
+                        initialRegion={{
+                            latitude: 59.3346,
+                            longitude: 18.0869,
+                            latitudeDelta: 7,
+                            longitudeDelta: 7,
+                        }} >
+                        {locationMarker}
+                        {toFromMarkers}
+                    </MapView>
+                </View>
+            <View style={Base.infoCard}>
+                <Text style={Typography.infoText}><Ionicons name="information-circle-outline" color="white" size={25}>        </Ionicons>I väntan på tåget</Text> 
+                <Text style={Typography.delayText}>Markerat på kartan finner du ett grön cirkel vid stationens pin som visar vart du hinner promenera medan du väntar.</Text>
+                <Text></Text>
+                <Text style={Typography.delayText}>Zooma in på kartan för att se markeringen.</Text>
             </View>
             <ScrollView>
                 {showList}

@@ -11,6 +11,7 @@ import FlashMessage from "react-native-flash-message";
 import Home from "./components/home/Home";
 import Auth from "./components/auth/Auth";
 import Map from "./components/map/Map";
+import Favorites from './components/favorites/fav';
 import trainsModel from "./models/delays";
 import authModel from "./models/auth";
 
@@ -42,28 +43,24 @@ export default function App() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'green',
-        tabBarInactiveTintColor: 'white',
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: 'grey',
         headerShown: false,
         tabBarStyle: {
           backgroundColor: 'rgba(34,36,40,1)',
       },
       })}
     >
-        {/* <Tab.Screen name="Home">
-            {() => <Home stations={stations} starStations={starStations} setStarStations={setStarStations} isLoggedIn={isLoggedIn} />}
-        </Tab.Screen> */}
-        <Tab.Screen name="Delays">
-          {() => <Map stations={stations} isLoggedIn={isLoggedIn} />}
-        </Tab.Screen>
-        {/* {isLoggedIn ?
-          <Tab.Screen name="Faktura">
-            {() => <Invoices setIsLoggedIn={setIsLoggedIn} />}
+        <Tab.Screen name="Hem" component={Home} />
+        <Tab.Screen name="Trafikinfo" component={Map} />
+        {isLoggedIn ?
+          <Tab.Screen name="Favoriter">
+            {() => <Favorites setIsLoggedIn={setIsLoggedIn} />}
           </Tab.Screen> :
           <Tab.Screen name="Logga in">
             {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
           </Tab.Screen>
-        } */}
+        }
         </Tab.Navigator>
       </NavigationContainer>
       <FlashMessage position="top" />
@@ -77,11 +74,11 @@ const styles = StyleSheet.create({
 });
 
 const routeIcons = {
-  "Delays": "train-outline",
-  "Home": "search-outline",
+  "Trafikinfo": "train-outline",
+  "Hem": "home-outline",
   // "Plock": "list",
   // "Inleverans": "send",
-  "Logga in": "lock-closed",
-  // "Faktura": "cash-outline",
+  "Logga in": "person-outline",
+  "Favoriter": "person-outline",
   // "Skicka order": "map",
 };

@@ -73,39 +73,39 @@ const delays = {
         return result;
     },
 
-    // getDelayFromStation: function getDelayFromStation(delay: Object, stations:Array<any>) {
-    //     let fLocation = "null";
-    //     let tLocation = "null";
-    //     let location:Boolean = false;
+    getDelayFromStation: function getDelayFromStation(delay: Object, stations:Array<any>) {
+        let fLocation = "null";
+        let tLocation = "null";
+        let location:Boolean = false;
 
-    //     if (delay.FromLocation !== undefined) {
-    //         fLocation = this.getDelay(delay.FromLocation[0].LocationName, stations);
-    //         location = true;
-    //     } else {
-    //         fLocation = "info saknas";
-    //     }
+        if (delay.FromLocation !== undefined) {
+            fLocation = this.getDelay(delay.FromLocation[0].LocationName, stations);
+            location = true;
+        } else {
+            fLocation = "info saknas";
+        }
 
-    //     if (delay.ToLocation !== undefined) {
-    //         tLocation = this.getDelay(delay.ToLocation[0].LocationName, stations);
-    //     } else {
-    //         tLocation = "info saknas";
-    //     }
+        if (delay.ToLocation !== undefined) {
+            tLocation = this.getDelay(delay.ToLocation[0].LocationName, stations);
+        } else {
+            tLocation = "info saknas";
+        }
         
-    //     const result = {
-    //         "delay": delay,
-    //         "locations":
-    //         [
-    //             {
-    //             "fLocation": fLocation,
-    //             "tLocation": tLocation,
-    //             },
-    //         ],
-    //         "locationBool": location,
-    //         "time": this.getTime(delay.AdvertisedTimeAtLocation, delay.EstimatedTimeAtLocation)
-    //     }
+        const result = {
+            "delay": delay,
+            "locations":
+            [
+                {
+                "fLocation": fLocation,
+                "tLocation": tLocation,
+                },
+            ],
+            "locationBool": location,
+            "time": this.getTime(delay.AdvertisedTimeAtLocation, delay.EstimatedTimeAtLocation)
+        }
 
-    //     return result;
-    // },
+        return result;
+    },
 };
 
 export default delays;

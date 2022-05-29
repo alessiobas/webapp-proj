@@ -5,4 +5,5 @@ export const input = {
     padding: 10,
     borderColor: "#ccc", 
     borderRadius: 3,
+    color: 'white',
 };
