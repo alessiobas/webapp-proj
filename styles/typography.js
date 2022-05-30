@@ -41,8 +41,17 @@ export const infoText = {
 };
 
 export const home = {
-    fontSize: 28,
+    fontSize: 32,
     marginTop: 340,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    color: 'white',
+    textAlign: "center",
+};
+
+export const home2 = {
+    fontSize: 32,
+    // marginTop: 340,
     fontWeight: 'bold',
     alignItems: 'center',
     color: 'white',
@@ -51,8 +60,40 @@ export const home = {
 
 export const homeButtonText = {
     fontSize: 14,
-    marginTop: 320,
+    marginTop: 10,
     alignItems: 'center',
     color: 'white',
     textAlign: "center",
+};
+
+export const loginBtnTxt = {
+    fontSize: 18,
+    alignItems: 'center',
+    color: 'white',
+    textAlign: "center",
+    fontWeight: 'bold',
+};
+
+export const header2Login = {
+    fontSize: 34,
+    marginBottom: 10,
+    color: 'white',
+    textAlign: 'center',
+    marginTop: 10,
+};
+
+export const labelLogin = {
+    fontSize: 20,
+    margin: 2,
+    color: 'white',
+    marginTop: 35,
+};
+
+export const labelInfo = {
+    fontSize: 20,
+    margin: 2,
+    color: 'white',
+    textAlign: 'center',
+    width: '70%',
+    marginLeft: 60,
 };

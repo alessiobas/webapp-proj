@@ -11,18 +11,14 @@ const fav = {
         };
 
         await fetch(`${config.base_url}/data`, {
+            method: 'POST',
             body: JSON.stringify(newFav),
             headers: {
                 'content-type': 'application/json',
                 'x-access-token': token.token
             },
-            method: 'POST'
-        })
-        .then(function (response) {
-            return response.json();
-        }).then(function(result) {
-            
         });
+        console.log(token);
     },
 
     showFav: async function showFav() {
@@ -50,11 +46,11 @@ const fav = {
             }
         }
 
-        const returner = arry.filter((obj, index, self) =>
-        index === self.findIndex((l) => (l.save === obj.save && l.State === obj.State))
-        );
+        // const returner = arry.filter((obj, index, self) =>
+        // index === self.findIndex((l) => (l.save === obj.save && l.State === obj.State))
+        // );
 
-        return returner;
+        return arry;
     },
 
     getUsers: async function getUsers() {

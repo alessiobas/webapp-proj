@@ -33,30 +33,40 @@ export const homeButton = {
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#1c1a1a',
     marginTop: 40,
     fontWeight: 'bold',
     marginLeft: 50,
 };
 
 export const loginButton = {
-    borderRadius: 15,
-    width: '80%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: 10,
+    border: 'none',
+    color: 'white',
+    width: '95%',
+    padding: 16,
+    textAlign: 'center',
     backgroundColor: 'green',
-    marginTop: 40,
-    marginLeft: 50,
+    display: 'inline-block',
+    textDecoration: 'none',
+    marginLeft: 10,
+    borderRadius: 15,
 };
 
 export const registerButton = {
+    marginTop: 12,
+    border: 'none',
+    color: 'white',
+    width: '95%',
+    padding: 16,
+    textAlign: 'center',
+    backgroundColor: '#1c1a1a',
+    display: 'inline-block',
+    textDecoration: 'none',
+    marginLeft: 10,
     borderRadius: 15,
-    width: '80%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    marginTop: 40,
-    marginLeft: 50,
+};
+
+export const iconLogin = {
+    marginTop: 200,
 };

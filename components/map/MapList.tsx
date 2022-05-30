@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { Base, Typography } from "../../styles";
-import { DataTable } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
 import MapView from 'react-native-maps';
 import { Marker, Circle } from "react-native-maps";
 import * as Location from 'expo-location';
-import { TouchableOpacity } from 'react-native';
-import { showMessage } from "react-native-flash-message";
 
 import delayModel from "../../models/delays";
 import stationsModel from "../../models/stations";
-import Delays from "../home/Delays";
-import delays from "../../models/delays";
 
 
 export default function MapList() {
@@ -141,18 +136,19 @@ export default function MapList() {
                             longitude: 18.0869,
                             latitudeDelta: 7,
                             longitudeDelta: 7,
-                        }} >
+                        }}
+                        testID="MapView">
                         {locationMarker}
                         {toFromMarkers}
                     </MapView>
                 </View>
-            <View style={Base.infoCard}>
+            <ScrollView>
+            <View style={Base.infoCard} testID="infoText">
                 <Text style={Typography.infoText}><Ionicons name="information-circle-outline" color="white" size={25}>        </Ionicons>I väntan på tåget</Text> 
                 <Text style={Typography.delayText}>Markerat på kartan finner du ett grön cirkel vid stationens pin som visar vart du hinner promenera medan du väntar.</Text>
                 <Text></Text>
                 <Text style={Typography.delayText}>Zooma in på kartan för att se markeringen.</Text>
             </View>
-            <ScrollView>
                 {showList}
             </ScrollView>
         </SafeAreaView>
@@ -160,11 +156,6 @@ export default function MapList() {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "center",
-    },
     map: {
         ...StyleSheet.absoluteFillObject,
     },

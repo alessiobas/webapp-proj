@@ -15,6 +15,15 @@ const stations = {
         return station;
     },
 
+    getStationByArtefact: function getStationByArtefact(station: string, stations: Array<any>) {
+        for (let i=0; i < stations.length; i++) {
+            if (stations[i].LocationSignature == station) {
+                return stations[i].AdvertisedLocationName;
+            }
+        }
+    },
+
+
     getStarStations: function getStarStations(LocationSignature: string, stations: Array<any>) {
         return stations.find(station => station.LocationSignature == LocationSignature);
     },

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
+import { View, Button, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import storage from "../../models/storage";
 import favModel from '../../models/fav';
 import delayModel from '../../models/delays';
@@ -10,52 +10,41 @@ import { Picker } from "@react-native-picker/picker";
 
 export default function FavList({ route, navigation, setIsLoggedIn }) {
     let { reload } = route.params || false;
-    const [ favStations, setFavStations ] = useState<Object>([]);
     const [ stations, setStations ] = useState([]);
-    const [ selStations, setSelStations ] = useState([]);
-    // const [refreshing, setRefreshing] = useState(false);
+    const [ data, setData ] = useState([]);
 
-    // let collectedStations = [];
+    let collectedStations = [];
 
     if (reload) {
-        userData();
-        stationsList();
+        getSavedFavs();
     }
 
-    // const onRefresh = async() => {
-    //     setFavStations(await favModel.showFav());
-    // }
+    async function getSavedFavs() {
+        const result = await favModel.showFav();
 
-    async function userData() {
-        setFavStations(await favModel.showFav());
+        setData(result);
     };
 
-    async function stationsList() {
-        const stationsList = await stationsModels.getStations();
-        setStations(stationsList);
-    };
+    async function setAllStations() {
+        const allStations = await stationsModels.getStations();
 
-    async function setFav(artefact) {
-        await favModel.addFav(artefact);
-    }
+        setStations(allStations);
+    };
 
     useEffect(() => {
-        userData();
-        stationsList();
+        setAllStations();
+        getSavedFavs();
     }, []);
 
-    const stationsNames = stations.map((station, index) => {
-        return (
-            <Picker.Item 
-                key={index}
-                label={station.AdvertisedLocationName}
-                value={station.LocationSignature}
-            />
-        )
-    })
+    for (let i=0; i < data.length; i++) {
+        let nameStation = stationsModels.getStation(data[i], stations);
+        collectedStations.push(nameStation);
+    }
 
-    const getFavS = favStations.map((stat, index) => {
-        return (<View key={index} style={Base.delayCard}>
+    const getFavS = collectedStations.map((stat, index) => {
+        if (stat.ActivityId !== undefined) {
+            return (
+            <View key={index} style={Base.delayCard}>
             <Text style={Typography.delayText}>Station: {stat.AdvertisedLocationName}</Text>
             <Text style={Typography.delayText}>Tåg: {stat.AdvertisedTrainIdent}</Text>
             <Text style={Typography.delayText}>Avgångstid: {delayModel.getTime(stat.AdvertisedTimeAtLocation, stat.EstimatedTimeAtLocation).adtime}</Text>
@@ -63,6 +52,12 @@ export default function FavList({ route, navigation, setIsLoggedIn }) {
             <Text style={Typography.delayText}>Försening: {delayModel.getTime(stat.AdvertisedTimeAtLocation, stat.EstimatedTimeAtLocation).mins} minuter</Text>
 
         </View>);
+        } else {
+            <View key={index} style={Base.delayCard}>
+            <Text style={Typography.delayText}>Station: {stationsModels.getStationByArtefact(stat, stations)}</Text>
+            <Text style={Typography.delayText}>Inga förseningar</Text>
+        </View>
+        }
     })
 
     async function logOut() {
@@ -77,37 +72,34 @@ export default function FavList({ route, navigation, setIsLoggedIn }) {
 
     return (
         <SafeAreaView style={Base.container}>
-            <View>
                 <Text style={Typography.header2}>Favoritstationer</Text>
-                <Text style={Typography.normal}>Addera station till favoriter</Text>
-                <Picker
-                selectedValue={selStations}
-                onValueChange={(itemValue) => {
-                    setSelStations( itemValue )
-                }}
-                itemStyle={{ color: 'white', borderColor: 'white'}}>
-                {stationsNames}
-                </Picker>
-                <Button
-                title="Addera station"
-                onPress={() => {
-                    setFav(selStations);
-                    navigation.navigate("FavList", { reload: true });
-                }}
-                />
                 <Text></Text>
                 <Text style={Typography.normal}>Eventuella förseningar till dina sparade stationer visas nedan </Text>
+                <Text></Text>
+                <Text style={Typography.normal}>Antal sparade stationer: {collectedStations.length}</Text>
                 <ScrollView>
                 {getFavS}
                 </ScrollView>
-            </View>
             <View>
-                <Button
+            <TouchableOpacity
+                style={Base.loginButton}
+                title="Addera stationer"
+                onPress={async () => {
+                    navigation.navigate("AddFav");
+                }}
+                >
+            <Text style={Typography.loginBtnTxt}>Addera stationer</Text>
+            </TouchableOpacity>
+                <TouchableOpacity
+                style={Base.registerButton}
                 title="Logga ut"
                 onPress={async () => {
                     await logOut();
                 }}
-                />
+                >
+            <Text style={Typography.loginBtnTxt}>Logga ut</Text>
+            </TouchableOpacity>
+            <Text></Text>
             </View>
         </SafeAreaView>
     )

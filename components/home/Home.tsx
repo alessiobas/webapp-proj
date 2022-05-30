@@ -18,7 +18,8 @@ export default function Home({ navigation }) {
 
   return (
     <ImageBackground source={sea} style={{ width: '100%', height: '100%'}}>
-        <Text style={Typography.home}>Tågförseningar i Sverige</Text>
+        <Text style={Typography.home}>Tågförseningar</Text>
+        <Text style={Typography.home2}>Sverige</Text>
         <Button style={Base.homeButton} 
           onPress={() => 
             navigation.navigate('Trafikinfo')

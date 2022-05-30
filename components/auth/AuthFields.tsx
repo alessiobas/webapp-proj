@@ -1,6 +1,8 @@
-import { View, Text, TextInput, Button, SafeAreaView } from "react-native";
+import { View, Text, TextInput, Button, SafeAreaView, TouchableOpacity } from "react-native";
 import { Typography, Forms, Base } from '../../styles';
 import { showMessage } from 'react-native-flash-message';
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default function AuthFields({ auth, setAuth, title, submit, navigation}) {
 
@@ -30,8 +32,13 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
 
     return (
         <SafeAreaView style={Base.container}>
-            <Text style={Typography.header2}>{title}</Text>
-            <Text style={Typography.label}>E-post</Text>
+            <Text></Text>
+            <Text style={Base.iconLogin}>*************************
+            <Ionicons name="person-outline" color="grey" size={60} marginLeft={100}></Ionicons>
+            </Text>
+            <Text style={Typography.header2Login}>Min sida</Text>
+            <Text style={Typography.labelInfo}>Gör dina resor ännu smidigare genom att logga in!</Text>
+            <Text style={Typography.labelLogin}>E-post</Text>
             <TextInput
                 style={Forms.input}
                 onChangeText={(content: string) => {
@@ -55,19 +62,25 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
                 autoCapitalize="none"
                 autoCorrect={false}
             />
-            <Button
+            <TouchableOpacity
+                style={Base.loginButton}
                 title={title}
                 onPress={() => {
                     submit();
                 }}
-            />
+            >
+            <Text style={Typography.loginBtnTxt}>{title}</Text>
+            </TouchableOpacity>
             {title === "Logga in" &&
-                <Button
+                <TouchableOpacity
+                    style={Base.registerButton}
                     title="Registrera istället"
                     onPress={() => {
                         navigation.navigate("Register");
                     }}
-                />
+                >
+                    <Text style={Typography.loginBtnTxt}>Registrera istället</Text>
+                    </TouchableOpacity>
             }
         </SafeAreaView>
     );
