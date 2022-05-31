@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react-native';
 import Home from '../components/home/Home';
 
-test('header should exist containing text Tågförseningar i Sverige', async () => {
+test('header should exist containing text Tågförseningar', async () => {
     const { getByText } = render(<Home />);
-    const header = await getByText('Tågförseningar i Sverige');
+    const header = await getByText('Tågförseningar');
 
     expect(header).toBeDefined();
 });

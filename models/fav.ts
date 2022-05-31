@@ -18,7 +18,7 @@ const fav = {
                 'x-access-token': token.token
             },
         });
-        console.log(token);
+        // console.log(token);
     },
 
     showFav: async function showFav() {

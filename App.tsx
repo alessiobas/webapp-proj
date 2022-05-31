@@ -12,7 +12,6 @@ import Home from "./components/home/Home";
 import Auth from "./components/auth/Auth";
 import Map from "./components/map/Map";
 import Favorites from './components/favorites/Fav';
-// import trainsModel from "./models/delays";
 import authModel from "./models/auth";
 
 const Tab = createBottomTabNavigator();
@@ -68,9 +67,6 @@ const styles = StyleSheet.create({
 const routeIcons = {
   "Trafikinfo": "train-outline",
   "Hem": "home-outline",
-  // "Plock": "list",
-  // "Inleverans": "send",
   "Logga in": "person-outline",
   "Favoriter": "person-outline",
-  // "Skicka order": "map",
 };

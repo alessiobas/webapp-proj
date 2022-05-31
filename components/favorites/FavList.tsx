@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import storage from "../../models/storage";
 import favModel from '../../models/fav';
 import delayModel from '../../models/delays';
@@ -7,6 +7,8 @@ import stationsModels from '../../models/stations';
 import { Base, Typography } from './../../styles';
 import { showMessage } from 'react-native-flash-message';
 import { Picker } from "@react-native-picker/picker";
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default function FavList({ route, navigation, setIsLoggedIn }) {
     let { reload } = route.params || false;
@@ -60,6 +62,12 @@ export default function FavList({ route, navigation, setIsLoggedIn }) {
         }
     })
 
+    let email = "Loading..."
+    if (collectedStations[0] !== undefined) {
+        email = collectedStations[0].email;
+    };
+
+
     async function logOut() {
         storage.deleteToken();
         setIsLoggedIn(false);
@@ -72,11 +80,18 @@ export default function FavList({ route, navigation, setIsLoggedIn }) {
 
     return (
         <SafeAreaView style={Base.container}>
-                <Text style={Typography.header2}>Favoritstationer</Text>
+            <View style={Base.backUser}>
+            <Text style={Base.iconFav}>*************************
+            <Ionicons name="person-outline" color="grey" size={60}></Ionicons>
+            </Text>
+                <Text style={Typography.header2Fav}>{email}</Text>
                 <Text></Text>
-                <Text style={Typography.normal}>Eventuella förseningar till dina sparade stationer visas nedan </Text>
+                <Text style={Typography.normalFav}>Antal sparade stationer</Text>
+                <Text style={Typography.normalFavNo}>{collectedStations.length}</Text>
                 <Text></Text>
-                <Text style={Typography.normal}>Antal sparade stationer: {collectedStations.length}</Text>
+                <Text></Text>
+            </View>
+                <Text style={Typography.normalFav1}>Sparade stationer med förseningar</Text>
                 <ScrollView>
                 {getFavS}
                 </ScrollView>

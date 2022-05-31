@@ -145,7 +145,7 @@ export default function MapList() {
             <ScrollView>
             <View style={Base.infoCard} testID="infoText">
                 <Text style={Typography.infoText}><Ionicons name="information-circle-outline" color="white" size={25}>        </Ionicons>I väntan på tåget</Text> 
-                <Text style={Typography.delayText}>Markerat på kartan finner du ett grön cirkel vid stationens pin som visar vart du hinner promenera medan du väntar.</Text>
+                <Text style={Typography.delayText}>Markerat på kartan finner du en grön cirkel vid stationens pin som visar vart du hinner promenera medan du väntar.</Text>
                 <Text></Text>
                 <Text style={Typography.delayText}>Zooma in på kartan för att se markeringen.</Text>
             </View>

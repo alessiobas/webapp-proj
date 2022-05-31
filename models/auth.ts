@@ -4,13 +4,6 @@ import Auth from "../interfaces/auth";
 
 
 const auth = {
-    // loggedIn: async function loggedIn() {
-    //     const tokenAndDate: any = await storage.readToken();
-    //     const twentyFourHours = 1000*60*60*24;
-    //     const notExpired = (new Date().getTime() - tokenAndDate.date) < twentyFourHours;
-
-    //     return tokenAndDate.token && notExpired;
-    // },
     loggedIn: async function loggedIn() {
         const token = await storage.readToken();
         const twentyFourHours = 1000*60*60*24;

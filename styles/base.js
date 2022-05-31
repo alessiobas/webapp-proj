@@ -70,3 +70,13 @@ export const registerButton = {
 export const iconLogin = {
     marginTop: 200,
 };
+
+export const iconFav = {
+    marginTop: 20,
+    marginBottom: 20,
+    color: '#1c1a1a',
+};
+
+export const backUser = {
+    backgroundColor: "#1c1a1a",
+}

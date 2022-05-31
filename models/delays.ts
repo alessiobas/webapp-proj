@@ -24,10 +24,6 @@ const delays = {
         return stations.find(station => station.LocationSignature == LocationSignature);
     },
 
-    // getStarDelay: function getStarDelay(ActivityId: string, delays:Array<any>) {
-    //     return delays.find(delay => delay.ActivityId == ActivityId);
-    // },
-
     getDelaysListAsync: async function getDelaysList () {
         const stations = await stationsModel.getStations();
         const delays = await this.getDelays();

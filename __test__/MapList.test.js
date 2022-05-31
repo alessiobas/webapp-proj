@@ -22,7 +22,7 @@ test('component View that shows info text exists', async () => {
 test('header and text in info box should exist containing correct text', async () => {
     const { getByText } = render(<MapList />);
     const header = await getByText("I väntan på tåget")
-    const rowOne = await getByText('Markerat på kartan finner du ett grön cirkel vid stationens pin som visar vart du hinner promenera medan du väntar.');
+    const rowOne = await getByText('Markerat på kartan finner du en grön cirkel vid stationens pin som visar vart du hinner promenera medan du väntar.');
     const rowTwo = await getByText('Zooma in på kartan för att se markeringen.');
 
 

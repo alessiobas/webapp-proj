@@ -97,3 +97,33 @@ export const labelInfo = {
     width: '70%',
     marginLeft: 60,
 };
+
+export const header2Fav = {
+    fontSize: 24,
+    // marginBottom: 28,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+};
+
+export const normalFav = {
+    fontSize: 20,
+    marginBottom: 5,
+    color: "white",
+    textAlign: 'center',
+};
+
+export const normalFavNo = {
+    fontSize: 30,
+    // marginBottom: 28,
+    color: "white",
+    textAlign: 'center',
+    fontWeight: 'bold',
+};
+
+export const normalFav1 = {
+    fontSize: 20,
+    marginTop: 50,
+    color: "white",
+    textAlign: 'center',
+};

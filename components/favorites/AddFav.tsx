@@ -3,10 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Picker } from "@react-native-picker/picker";
 import { Base, Typography } from '../../styles';
 
-import Station from './../../interfaces/stations';
 import favModel from './../../models/fav';
-import storage from "../../models/storage";
-import stationModel from "../../models/stations";
 import DropDown from "./DropDown";
 
 export default function AddFav({ navigation }) {
